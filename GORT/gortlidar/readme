@@ -1,0 +1,88 @@
+The analytical Geometric Optical and Canopy Radiative Transfer (GORT) lidar model
+References:
+1. A clumped-foliage canopy radiative transfer model for a global dynamic terrestrial 
+ecosystem model I: theory by Ni-Meister et al. (2010)
+2. A clumped-foliage canopy radiative transfer model for a global dynamic terrestrial 
+ecosystem model I: validation by Yang et al. (2010)
+3. Modeling lidar waveforms in heterogeneous and discrete canopies by Ni-Meister et al. (2001)
+4. Validating modeled lidar waveform in forest canopies with airborne laser scanning data (RSE 2017, accepted)
+
+
+The version I sent to you is hard-coded inputs. You need to change the input parameters
+for your input. 
+ 
+To run lidar-GORT model:
+gfortran gort_lidar.f90 gort_lidar_main.f90 -o gort_lidar
+
+./gort_lidar 
+
+Outputs saved in gort.out include:
+leaf orientation factor and clumping factor: G,gamma,
+Vertical profiles:
+fp 	! foliage profile 
+efp, 	! effective foliage profile G*gamma*foliage profile
+pgap, 	! gap probability
+dpdz, 	! dp/dz
+wvfm	! waveforms
+
+The output from gort_lidar has no-gaussian smooth. I usually run a gaussian smooth using idl.
+I also include the idl code to do gaussian smooth to modeled waveform. 
+
+Convolute GORT-modeled waveform with gaussian pulse, check run_gort.pro for details
+idl
+.r run_gort
+run_gort
+exit
+
+
+
+You could also make the code more professional by read an input file. See detail below: 
+This approach may make it easier for user. 
+
+
+The input include one or two or more layers/plant function types (pfts).
+pft follows  CLM 16 plant function types:
+  !1: needleleaf_evergreen_temperate_tree   
+  !2: needleleaf_evergreen_boreal_tree      
+  
+  !3: needleleaf_deciduous_boreal_tree      
+  
+  !4: broadleaf_evergreen_tropical_tree     
+  !5: broadleaf_evergreen_temperate_tree    
+  
+  !6: broadleaf_deciduous_tropical_tree     
+  !7: broadleaf_deciduous_temperate_tree    
+  !8: broadleaf_deciduous_boreal_tree       
+  
+  !9: broadleaf_evergreen_shrub             
+  !10:broadleaf_deciduous_temperate_shrub   
+  !11:broadleaf_deciduous_boreal_shrub      
+  
+  !12:c3_arctic_grass                       
+  !13:c3_non-arctic_grass                   
+  !14:c4_grass                              
+  
+  !15:crop 1: e.g.corn                                  
+  !16:crop 2: e.g.wheat                                 
+ 
+The inputs are something like saved in gort.in:
+ 2
+       0.2101       2.2731       2.5655      16.1014       0.01000       0.6825       2.5654       0.0000       0.4291       0.4239       0.3516 1
+       0.0414       1.8032       1.9939      11.7821       0.01000       0.5815       1.9938       0.0000       0.4312       0.4776       0.3516 7
+
+The meanings of these parameters are gort_input structure:
+  type gort_input
+     real :: dens_tree         ! Crown count density (m-2)
+     real :: dens_foliage      ! foliage area volume density of a single crown(m-1)
+     real :: h1, h2            ! lower and upper bound of crown centers (m)
+     real :: dz                ! height increase for each height level
+     real :: horz_radius       ! horizontal crown radius (m)
+     real :: vert_radius       ! vertical crown radius (m)
+     real :: zenith            ! solar zenith angle (degree)
+     real :: rhol              ! leaf reflectance
+     real :: taul              ! leaf transmittance
+     real :: rhos              ! background albedo 
+     integer :: pft            ! plant function type
+  end type gort_input
+
+
