@@ -1,0 +1,38 @@
+This version of GORT is based on the program by Wenge Ni (1997) and modified by Conghe Song to include the slope and aspect effect on canopy BRDF. If you have any suggestions or found any bugs in the program, please contact  Wenge Ni-Meister at Wenge.Ni-Meister@hunter.cuny.edu. Your comments will be highly appreciated.
+
+To calculate canopy BRDF with GORT, run the main.c program which reads the gort input file and calls gort_apply()function. 
+
+The gort input file including 19 lines:
+3.0           /* h1: lower boundary of crown center (m)      */
+8.5           /* h2: upper boundary of crown centers (m)     */
+0.76          /* R: radius, horizontal mean crown radius (m)    */
+3.55263       /* ellipticity: brratio, crown spheroid ellipticity (b/r)   */
+0.405         /* density same as lambda: trees per unit area */
+2.27          /* ELAI: Effective LAI     */
+1.0           /* dz: height differential    */
+0.5           /* ds: path length differential  */
+1.0           /* dthnum: dth theta differential  */
+0.5           /* k:  extinction coefficient    */
+0.09          /* rl: leaf reflectance */
+0.032         /* tl: leaf transmittance */
+0.249         /* rg: background reflectanc */
+30.0          /* solar zenith angle (snz)  */
+0.0           /* viewing zenith angle (vzn) */
+180.0         /* solar azimuth angle (saz)  */
+0.0           /* viewing azimuth angle (vaz) */
+30.0          /* slope */
+90.0          /* aspect */
+
+
+This program return single value of canopy BRDF. 
+Global variable structure g, contains the gort model input parameters, some intermedium  and output variables. 
+
+The step of running this program.
+Using Makeflie to compile the gort apply program.
+
+step1: make clean   /* remove the all *o file */
+step2: make         /*  compile the program  */
+step3: ./gort1 >log.dat  /* run the program and write the display print into the log.dat file  */
+
+There is a mkrun.csh, a simle way to to run the program 
+./mkrun.csh

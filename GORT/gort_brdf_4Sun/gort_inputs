@@ -1,0 +1,19 @@
+3.0           /* h1: lower boundary of crown center (m)      */
+8.5           /* h2: upper boundary of crown centers (m)     */
+0.76          /* R: radius, horizontal mean crown radius (m)    */
+3.55263       /* ellipticity: brratio, crown spheroid ellipticity (b/r)   */
+0.405         /* density same as lambda: trees per unit area */
+2.27          /* ELAI: Effective LAI     */
+1.0           /* dz: height differential    */
+0.5           /* ds: path length differential  */
+1.0           /* dthnum: dth theta differential -- IT IS A FIXED VALUE. CAN NOT BE CHANGED  */
+0.5           /* k:  extinction coefficient    */
+0.09          /* rl: leaf reflectance */
+0.032         /* tl: leaf transmittance */
+0.249         /* rg: background reflectanc */
+30.0	      /* solar zenith angle (snz)  */
+0.0	      /* viewing zenith angle (vzn) */
+180.0	      /* solar azimuth angle (saz)  */
+0.0	      /* viewing azimuth angle (vaz) */
+30.0          /* slope */
+90.0          /* aspect */
